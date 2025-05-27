@@ -5,7 +5,7 @@ export default function authedUserReducer(authedUser = null, action = {}) {
     case ActionType.SET_AUTHED_USER:
       return action.payload.authedUser;
     case ActionType.UNSET_AUTHED_USER:
-      return action.payload.authedUser;
+      return null;
     default:
       return authedUser;
   }

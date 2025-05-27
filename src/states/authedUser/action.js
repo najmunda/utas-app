@@ -33,9 +33,6 @@ export function asyncSetAuthedUser({ email, password }) {
 export function unsetAuthedUserActionCreator() {
   return {
     type: ActionType.UNSET_AUTHED_USER,
-    payload: {
-      authedUser: null,
-    },
   };
 }
 
