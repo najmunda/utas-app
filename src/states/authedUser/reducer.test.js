@@ -13,30 +13,31 @@ describe('authedUserReducer function', () => {
 
   it('should return state with authed user data when given "SET_AUTHED_USER" action', () => {
     const initialState = {};
+    const authedUserData = {
+      id: 'user_test',
+      name: 'User Test',
+      email: 'user@test.com',
+      avatar: 'https://avatar-test-url.jpg',
+    };
     const setAction = {
       type: 'SET_AUTHED_USER',
       payload: {
-        authedUser: {
-          id: 'user_test',
-          name: 'User Test',
-          email: 'user@test.com',
-          avatar: 'https://avatar-test-url.jpg',
-        },
+        authedUser: authedUserData,
       },
     };
 
     const nextState = authedUserReducer(initialState, setAction);
 
-    expect(nextState).toStrictEqual({
+    expect(nextState).toBe(authedUserData);
+  });
+
+  it('should return state with null when given "UNSET_AUTHED_USER" action', () => {
+    const initialState = {
       id: 'user_test',
       name: 'User Test',
       email: 'user@test.com',
       avatar: 'https://avatar-test-url.jpg',
-    });
-  });
-
-  it('should return state with null when given "UNSET_AUTHED_USER" action', () => {
-    const initialState = {};
+    };
     const unsetAction = {
       type: 'UNSET_AUTHED_USER',
     };
