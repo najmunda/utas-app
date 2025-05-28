@@ -30,7 +30,7 @@ export default defineConfig([
       'react/no-array-index-key': 'off',
       'import/no-named-as-default': 'off',
       'import/no-named-as-default-member': 'off',
-      'react/jsx-props-no-spreading': 'off'
+      'react/jsx-props-no-spreading': 'off',
     },
   },
 ]);
