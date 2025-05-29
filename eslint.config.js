@@ -5,6 +5,7 @@ import { defineConfig } from "eslint/config";
 import { FlatCompat } from "@eslint/eslintrc";
 import path from "path";
 import { fileURLToPath } from "url";
+import pluginCypress from "eslint-plugin-cypress"
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +19,7 @@ export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,jsx}"], plugins: { js }, extends: ["js/recommended"] },
   { files: ["**/*.{js,mjs,cjs,jsx}"], languageOptions: { globals: globals.browser } },
   pluginReact.configs.flat.recommended,
+  pluginCypress.configs.recommended,
   {
     languageOptions: {
       parserOptions: {

@@ -1,5 +1,5 @@
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import api from '../../utils/api';
+import * as api from '../../utils/api';
 import { receiveUsersActionCreator } from '../users/action';
 import { receiveThreadsActionCreator } from '../threads/action';
 

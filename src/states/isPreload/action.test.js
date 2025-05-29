@@ -3,7 +3,7 @@ import {
   beforeEach, describe, expect, it, vi,
 } from 'vitest';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import api from '../../utils/api';
+import * as api from '../../utils/api';
 import {
   asyncPreload,
   setIsPreloadActionCreator,
