@@ -48,30 +48,35 @@ function NewThreadForm({ categories = [] }) {
           type="text"
           name="title"
           id="title"
+          aria-label="title"
           value={inputtedTitle}
           onChange={handleTitleInput}
-          placeholder="Ketik judul utas..."
+          placeholder="Type thread title..."
           className="flex-1"
+          required
         />
         <InputText
           type="text"
           name="category"
           id="category"
+          aria-label="category"
           value={inputtedCategory}
           onChange={handleCategoryInput}
           list="categories"
           placeholder="Kategori..."
         />
         <datalist id="categories">
-          {categories.map((category) => <option key={category}>{category}</option>)}
+          {categories.map((category) => <option key={category} aria-label="option">{category}</option>)}
         </datalist>
       </div>
       <TextArea
         name="body"
         id="body"
+        aria-label="body"
         onChange={handleBodyInput}
         value={inputtedBody}
         placeholder="Apa yang ingin kamu bahas?"
+        required
       />
       <TextButton
         type="submit"

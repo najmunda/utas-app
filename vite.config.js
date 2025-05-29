@@ -4,11 +4,11 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [
-		react(),
-		tailwindcss(),
-	],
-	test: {
-		environment: 'jsdom',
-	}
-})
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+  test: {
+    environment: 'jsdom',
+  },
+});

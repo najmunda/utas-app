@@ -22,7 +22,7 @@ function ThreadList({ users, threads, columnCount }) {
   }[columnCount] ?? 'grid-cols-1';
 
   return (
-    <div className={`grid ${columnClassName} gap-2`}>
+    <div aria-label="thread-list" className={`grid ${columnClassName} gap-2`}>
       {renderedThreads.map((column, index) => (
         <div
           key={`${columnCount}${index}`}
