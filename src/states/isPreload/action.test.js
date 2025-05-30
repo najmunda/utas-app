@@ -8,6 +8,8 @@ import {
 } from './action';
 import { setAuthedUserActionCreator } from '../authedUser/action';
 
+import * as api from '../../utils/api';
+
 const fakeToken = 'fakeToken';
 
 const fakeOwnProfileResponse = {
@@ -28,8 +30,6 @@ vi.mock('../../utils/api', () => ({
   getOwnProfile: vi.fn(),
 }));
 
-import * as api from '../../utils/api';
-
 describe('asyncPreload thunk function', () => {
   afterEach(() => {
     vi.resetAllMocks();
@@ -40,8 +40,6 @@ describe('asyncPreload thunk function', () => {
     api.getOwnProfile.mockImplementation(() => Promise.resolve(fakeOwnProfileResponse));
 
     await asyncPreload()(dispatch);
-
-    console.log(dispatch.mock.calls);
 
     expect(dispatch).toHaveBeenCalledWith(showLoading());
     expect(dispatch).toHaveBeenCalledWith(setAuthedUserActionCreator(fakeOwnProfileResponse));

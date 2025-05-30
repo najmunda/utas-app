@@ -39,7 +39,7 @@ function NewThreadForm({ categories = [] }) {
 
   return (
     <form
-      name='new-thread-form'
+      name="new-thread-form"
       onSubmit={handleFormSubmit}
       className="p-4 flex flex-col gap-2
         bg-white border border-neutral-300 rounded-lg hover:shadow-lg"

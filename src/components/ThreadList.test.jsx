@@ -5,6 +5,8 @@ import {
 import { cleanup, render, screen } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
+import ThreadList from './ThreadList';
+
 expect.extend(matchers);
 
 const fakeUsers = [
@@ -37,8 +39,6 @@ const fakeThreads = [
 vi.mock('./ThreadItem', () => ({
   default: ({ data }) => (<div>{data.id}</div>),
 }));
-
-import ThreadList from './ThreadList';
 
 describe('ThreadList component', () => {
   afterEach(() => {

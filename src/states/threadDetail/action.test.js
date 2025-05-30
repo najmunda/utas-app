@@ -9,6 +9,8 @@ import {
   upvoteThreadDetailActionCreator,
 } from './action';
 
+import * as api from '../../utils/api';
+
 const fakeAuthedUserState = {
   id: 'user_tes',
   name: 'user tes',
@@ -54,8 +56,6 @@ const getState = vi.fn();
 vi.mock('../../utils/api', () => ({
   unvoteThread: vi.fn(),
 }));
-
-import * as api from '../../utils/api';
 
 describe('asyncUnvoteThreadDetail thunk function', () => {
   afterEach(() => {

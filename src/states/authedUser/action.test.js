@@ -1,6 +1,10 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  afterEach, describe, expect, it, vi,
+} from 'vitest';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { asyncSetAuthedUser, setAuthedUserActionCreator } from './action';
+
+import * as api from '../../utils/api';
 
 const fakeToken = 'fakeToken';
 
@@ -21,8 +25,6 @@ vi.mock('../../utils/api', () => ({
   setToken: () => null,
   getOwnProfile: vi.fn(),
 }));
-
-import * as api from '../../utils/api';
 
 describe('asyncSetAuthedUser thunk function', () => {
   afterEach(() => {

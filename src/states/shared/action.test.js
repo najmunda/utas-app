@@ -1,8 +1,12 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import {
+  afterEach, describe, expect, it, vi,
+} from 'vitest';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import asyncReceiveUsersAndThreads from './action';
 import { receiveUsersActionCreator } from '../users/action';
 import { receiveThreadsActionCreator } from '../threads/action';
+
+import * as api from '../../utils/api';
 
 const fakeUsersResponse = [
   {
@@ -53,8 +57,6 @@ vi.mock('../../utils/api', () => ({
   getUsers: vi.fn(),
   getThreads: vi.fn(),
 }));
-
-import * as api from '../../utils/api';
 
 describe('asyncReceiveUsersAndThreads thunk function', () => {
   afterEach(() => {

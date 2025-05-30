@@ -12,7 +12,9 @@ function ThreadList({ users, threads, columnCount }) {
         owner,
       };
     }).reduce((array, thread, threadIndex) => {
-      const columnIndex = threadIndex < validColumnCount ? threadIndex : threadIndex % validColumnCount;
+      const columnIndex = threadIndex < validColumnCount
+        ? threadIndex
+        : threadIndex % validColumnCount;
       return array.map((column, index) => (index === columnIndex ? [...column, thread] : column));
     }, (new Array(validColumnCount)).fill([]));
 

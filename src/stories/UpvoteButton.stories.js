@@ -1,15 +1,15 @@
-import UpvoteButton from "../components/UpvoteButton";
+import UpvoteButton from '../components/UpvoteButton';
 
 export default {
-    title: 'UpvoteButton',
-    component: UpvoteButton,
-    parameters: {
-      layout: 'centered',
-    },
-    tags: ['autodocs'],
-    argTypes: {
-      count: { control: { type: 'number', min: 0 } },
-    },
+  title: 'UpvoteButton',
+  component: UpvoteButton,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {
+    count: { control: { type: 'number', min: 0 } },
+  },
 };
 
 export const Unvoted = {
@@ -17,7 +17,7 @@ export const Unvoted = {
     handleClick: () => {},
     count: 0,
   },
-}
+};
 
 export const Voted = {
   args: {
@@ -25,4 +25,4 @@ export const Voted = {
     count: 1,
     isVoted: true,
   },
-}
+};

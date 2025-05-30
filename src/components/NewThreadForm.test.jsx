@@ -6,6 +6,8 @@ import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
+import NewThreadForm from './NewThreadForm';
+
 expect.extend(matchers);
 
 const dispatchMock = vi.fn();
@@ -19,8 +21,6 @@ vi.mock('../states/threads/action', () => ({
     return () => {};
   },
 }));
-
-import NewThreadForm from './NewThreadForm';
 
 describe('NewThreadForm component', () => {
   afterEach(() => {
@@ -79,22 +79,20 @@ describe('NewThreadForm component', () => {
     const categoryInput = await screen.getByRole('combobox', { name: 'category' });
     const bodyInput = await screen.getByRole('textbox', { name: 'body' });
     const submitButton = await screen.getByRole('button');
-    const titleText = "Title of Test Thread";
-    const category = "test";
-    const bodyText = "Body of Test Thread";
+    const titleText = 'Title of Test Thread';
+    const category = 'test';
+    const bodyText = 'Body of Test Thread';
 
     await userEvent.type(titleInput, titleText);
     await userEvent.type(categoryInput, category);
     await userEvent.type(bodyInput, bodyText);
     await userEvent.click(submitButton);
 
-    console.log(dispatchMock.mock.calls);
-
     expect(submitButton.getAttribute('type')).toBe('submit');
     expect(typeof dispatchMock.mock.calls[0][0]).toBe('function');
     expect(asyncCreateThreadMock).toHaveBeenCalledWith({
       title: titleText,
-      category: category,
+      category,
       body: bodyText,
     });
   });
