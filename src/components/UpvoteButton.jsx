@@ -20,8 +20,11 @@ function UpvoteButton({ handleClick, count, isVoted = false }) {
 }
 
 UpvoteButton.propTypes = {
+  /** Function that triggered on vote click, assign on onClick */
   handleClick: PropTypes.func.isRequired,
+  /** Count of the up vote */
   count: PropTypes.number.isRequired,
+  /** Boolean indicate either authed user is up voted or not */
   isVoted: PropTypes.bool,
 };
 

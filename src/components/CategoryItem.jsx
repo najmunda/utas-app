@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function CategoryItem({ category, isOption = false, isSelected = false }) {
   return isOption ? (
@@ -24,8 +24,11 @@ function CategoryItem({ category, isOption = false, isSelected = false }) {
 }
 
 CategoryItem.propTypes = {
+  /** Name of category */
   category: PropTypes.string.isRequired,
+  /** Boolean that decide is component clickable (radio input) or not (text) */
   isOption: PropTypes.bool,
+  /** Boolean that decide is radio input selected or not */
   isSelected: PropTypes.bool,
 };
 
