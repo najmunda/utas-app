@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ThreadItem from './ThreadItem';
 
 function ThreadList({ users, threads, columnCount }) {
+  const validColumnCount = columnCount > 0 && columnCount <= 3 ? columnCount : 1;
   const renderedThreads = threads
     .map((thread) => {
       const owner = users.find((user) => user.id === thread.ownerId);
@@ -11,21 +12,21 @@ function ThreadList({ users, threads, columnCount }) {
         owner,
       };
     }).reduce((array, thread, threadIndex) => {
-      const columnIndex = threadIndex < columnCount ? threadIndex : threadIndex % columnCount;
+      const columnIndex = threadIndex < validColumnCount ? threadIndex : threadIndex % validColumnCount;
       return array.map((column, index) => (index === columnIndex ? [...column, thread] : column));
-    }, (new Array(columnCount)).fill([]));
+    }, (new Array(validColumnCount)).fill([]));
 
   const columnClassName = {
     1: 'grid-cols-1',
     2: 'grid-cols-2',
     3: 'grid-cols-3',
-  }[columnCount] ?? 'grid-cols-1';
+  }[validColumnCount] ?? 'grid-cols-1';
 
   return (
     <div aria-label="thread-list" className={`grid ${columnClassName} gap-2`}>
       {renderedThreads.map((column, index) => (
         <div
-          key={`${columnCount}${index}`}
+          key={`${validColumnCount}${index}`}
           className="flex-1 flex flex-col gap-2 items-stretch"
         >
           {column.map((thread) => (

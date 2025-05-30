@@ -20,8 +20,8 @@ describe('DownvoteButton component', () => {
     const countText = await screen.getByRole('paragraph');
 
     expect(downvoteButton).toBeVisible();
-
     expect(downvoteButton).toContainElement(countText);
+    expect(countText).toBeVisible();
     expect(countText).toHaveTextContent('0');
   });
 
@@ -33,5 +33,18 @@ describe('DownvoteButton component', () => {
     await userEvent.click(downvoteButton);
 
     expect(handleLoginMock).toHaveBeenCalledOnce();
+  });
+
+  it('icon should have different className when isVoted equal true', async () => {
+    render(<DownvoteButton handleClick={() => {}} count={0} />);
+    const downvoteButton = await screen.getByRole('button');
+    const unvotedIconClassName = downvoteButton.querySelector('svg').getAttribute('class');
+
+    cleanup();
+    render(<DownvoteButton handleClick={() => {}} count={0} isVoted />);
+    const downvotedButton = await screen.getByRole('button');
+    const votedIconClassName = downvotedButton.querySelector('svg').getAttribute('class');
+
+    expect(votedIconClassName).not.toEqual(unvotedIconClassName);
   });
 });

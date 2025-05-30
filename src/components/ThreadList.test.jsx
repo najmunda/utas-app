@@ -1,13 +1,9 @@
 import React from 'react';
 import {
-  afterAll,
   afterEach, describe, expect, it, vi,
 } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
-import { Provider } from 'react-redux';
-import ThreadList from './ThreadList';
-import store from '../states/index';
 
 expect.extend(matchers);
 
@@ -22,6 +18,7 @@ const fakeUsers = [
     id: 'user_three',
   },
 ];
+
 const fakeThreads = [
   {
     id: 'thread-one',
@@ -37,14 +34,16 @@ const fakeThreads = [
   },
 ];
 
+vi.mock('./ThreadItem', () => ({
+  default: ({ data }) => (<div>{data.id}</div>),
+}));
+
+import ThreadList from './ThreadList';
+
 describe('ThreadList component', () => {
   afterEach(() => {
-    cleanup();
-  });
-
-  afterAll(() => {
-    vi.resetModules();
     vi.resetAllMocks();
+    cleanup();
   });
 
   it('should show parent and column div with correct className to form masonry', async () => {
@@ -83,14 +82,7 @@ describe('ThreadList component', () => {
   });
 
   it('should have thread item children equal threads length', async () => {
-    vi.mock('./ThreadItem', () => ({
-      default: ({ data }) => (<div>{data.id}</div>),
-    }));
-    render(
-      <Provider store={store}>
-        <ThreadList users={fakeUsers} threads={fakeThreads} columnCount={1} />
-      </Provider>,
-    );
+    render(<ThreadList users={fakeUsers} threads={fakeThreads} columnCount={1} />);
     const parentDiv = await screen.getByLabelText('thread-list');
     const totalChildren = (Array.from(parentDiv.children))
       .reduce((total, column) => total + column.children.length, 0);

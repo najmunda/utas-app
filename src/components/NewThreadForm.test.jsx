@@ -1,30 +1,36 @@
 import React from 'react';
 import {
-  afterEach, beforeEach, describe, expect, it,
+  afterEach, describe, expect, it, vi,
 } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as matchers from '@testing-library/jest-dom/matchers';
-import { Provider } from 'react-redux';
-import NewThreadForm from './NewThreadForm';
-import store from '../states/index';
 
 expect.extend(matchers);
 
+const dispatchMock = vi.fn();
+const asyncCreateThreadMock = vi.fn();
+vi.mock('react-redux', () => ({
+  useDispatch: () => dispatchMock,
+}));
+vi.mock('../states/threads/action', () => ({
+  asyncCreateThread: (threadData) => {
+    asyncCreateThreadMock(threadData);
+    return () => {};
+  },
+}));
+
+import NewThreadForm from './NewThreadForm';
+
 describe('NewThreadForm component', () => {
-  beforeEach(() => {
-    render(
-      <Provider store={store}>
-        <NewThreadForm categories={[]} />
-      </Provider>,
-    );
-  });
   afterEach(() => {
+    vi.resetAllMocks();
     cleanup();
   });
 
   it('should has title input that required and handle input correctly', async () => {
-    const input = 'usernametest';
+    render(<NewThreadForm categories={[]} />);
+    const input = 'Thread Test Title';
     const titleInput = await screen.getByRole('textbox', { name: 'title' });
 
     await userEvent.type(titleInput, input);
@@ -35,6 +41,7 @@ describe('NewThreadForm component', () => {
   });
 
   it('should has category input that handle type input correctly', async () => {
+    render(<NewThreadForm categories={[]} />);
     const categoryInput = await screen.getByRole('combobox', { name: 'category' });
 
     await userEvent.type(categoryInput, 'test');
@@ -43,7 +50,19 @@ describe('NewThreadForm component', () => {
     expect(categoryInput).toHaveValue('test');
   });
 
+  it('should has option of given category', async () => {
+    const categories = ['category-1', 'category-2'];
+    const { container } = render(<NewThreadForm categories={categories} />);
+
+    const datalist = container.querySelector('datalist');
+    const options = container.querySelectorAll('option');
+
+    expect(datalist).toBeInTheDocument();
+    expect(options).toHaveLength(categories.length);
+  });
+
   it('should has body input that required and handle input correctly', async () => {
+    render(<NewThreadForm categories={[]} />);
     const input = 'this is body';
     const bodyInput = await screen.getByRole('textbox', { name: 'body' });
 
@@ -54,10 +73,29 @@ describe('NewThreadForm component', () => {
     expect(bodyInput).toHaveValue(input);
   });
 
-  it('should has button with submit type', async () => {
+  it('should has button with submit type and dispatch correct action', async () => {
+    render(<NewThreadForm categories={[]} />);
+    const titleInput = await screen.getByRole('textbox', { name: 'title' });
+    const categoryInput = await screen.getByRole('combobox', { name: 'category' });
+    const bodyInput = await screen.getByRole('textbox', { name: 'body' });
     const submitButton = await screen.getByRole('button');
+    const titleText = "Title of Test Thread";
+    const category = "test";
+    const bodyText = "Body of Test Thread";
 
-    expect(submitButton).toBeVisible();
+    await userEvent.type(titleInput, titleText);
+    await userEvent.type(categoryInput, category);
+    await userEvent.type(bodyInput, bodyText);
+    await userEvent.click(submitButton);
+
+    console.log(dispatchMock.mock.calls);
+
     expect(submitButton.getAttribute('type')).toBe('submit');
+    expect(typeof dispatchMock.mock.calls[0][0]).toBe('function');
+    expect(asyncCreateThreadMock).toHaveBeenCalledWith({
+      title: titleText,
+      category: category,
+      body: bodyText,
+    });
   });
 });
