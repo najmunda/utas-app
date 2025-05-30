@@ -53,7 +53,8 @@ describe('threadDetailReducer function', () => {
     expect(nextState).toBe(threadDetail);
   });
 
-  it('should return thread detail with added userId on upVotesBy array when given "UPVOTE_THREAD_DETAIL" action', () => {
+  it('should return state with authed user id on upVotesBy array when given "UPVOTE_THREAD_DETAIL" action', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -85,7 +86,7 @@ describe('threadDetailReducer function', () => {
     const upvoteAction = {
       type: 'UPVOTE_THREAD_DETAIL',
       payload: {
-        userId: 'test-user-upvote',
+        userId: authedUserId,
       },
     };
 
@@ -93,11 +94,12 @@ describe('threadDetailReducer function', () => {
 
     expect(nextState).toStrictEqual({
       ...initialState,
-      upVotesBy: ['test-user-upvote'],
+      upVotesBy: [authedUserId],
     });
   });
 
-  it('should return same state when given "UPVOTE_THREAD_DETAIL" action if upVotesBy array already has userId', () => {
+  it('should return same state when given "UPVOTE_THREAD_DETAIL" action if upVotesBy array already has authed user id', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -109,7 +111,7 @@ describe('threadDetailReducer function', () => {
         name: 'Users Tes',
         avatar: 'https://avatar-user-tes-url.jpg',
       },
-      upVotesBy: ['test-user-upvote'],
+      upVotesBy: [authedUserId],
       downVotesBy: [],
       comments: [
         {
@@ -129,7 +131,7 @@ describe('threadDetailReducer function', () => {
     const upvoteAction = {
       type: 'UPVOTE_THREAD_DETAIL',
       payload: {
-        userId: 'test-user-upvote',
+        userId: authedUserId,
       },
     };
 
@@ -138,7 +140,8 @@ describe('threadDetailReducer function', () => {
     expect(nextState).toStrictEqual(initialState);
   });
 
-  it('should return thread detail with added userId on downVotesBy array when given "DOWNVOTE_THREAD_DETAIL" action', () => {
+  it('should return state with authed user id on downVotesBy array when given "DOWNVOTE_THREAD_DETAIL" action', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -170,7 +173,7 @@ describe('threadDetailReducer function', () => {
     const downvoteAction = {
       type: 'DOWNVOTE_THREAD_DETAIL',
       payload: {
-        userId: 'test-user-downvote',
+        userId: authedUserId,
       },
     };
 
@@ -178,11 +181,12 @@ describe('threadDetailReducer function', () => {
 
     expect(nextState).toStrictEqual({
       ...initialState,
-      downVotesBy: ['test-user-downvote'],
+      downVotesBy: [authedUserId],
     });
   });
 
-  it('should return same state when given "DOWNVOTE_THREAD_DETAIL" action if downVotesBy array already has userId', () => {
+  it('should return same state when given "DOWNVOTE_THREAD_DETAIL" action if downVotesBy array already has authed user id', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -195,7 +199,7 @@ describe('threadDetailReducer function', () => {
         avatar: 'https://avatar-user-tes-url.jpg',
       },
       upVotesBy: [],
-      downVotesBy: ['test-user-downvote'],
+      downVotesBy: [authedUserId],
       comments: [
         {
           id: 'comment-tes',
@@ -214,7 +218,7 @@ describe('threadDetailReducer function', () => {
     const downvoteAction = {
       type: 'DOWNVOTE_THREAD_DETAIL',
       payload: {
-        userId: 'test-user-downvote',
+        userId: authedUserId,
       },
     };
 
@@ -223,7 +227,8 @@ describe('threadDetailReducer function', () => {
     expect(nextState).toStrictEqual(initialState);
   });
 
-  it('should return thread detail with empty upVotesBy array when given "UNVOTE_THREAD_DETAIL" action', () => {
+  it('should return state with authed user id not included in upVotesBy array when given "UNVOTE_THREAD_DETAIL" action', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -235,7 +240,7 @@ describe('threadDetailReducer function', () => {
         name: 'Users Tes',
         avatar: 'https://avatar-user-tes-url.jpg',
       },
-      upVotesBy: ['test-user-unvote'],
+      upVotesBy: [authedUserId],
       downVotesBy: [],
       comments: [
         {
@@ -255,7 +260,7 @@ describe('threadDetailReducer function', () => {
     const unvoteAction = {
       type: 'UNVOTE_THREAD_DETAIL',
       payload: {
-        userId: 'test-user-unvote',
+        userId: authedUserId,
       },
     };
 
@@ -267,7 +272,8 @@ describe('threadDetailReducer function', () => {
     });
   });
 
-  it('should return thread detail with empty downVotesBy array when given "UNVOTE_THREAD_DETAIL" action', () => {
+  it('should return state with authed user id not included in downVotesBy array when given "UNVOTE_THREAD_DETAIL" action', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -280,7 +286,7 @@ describe('threadDetailReducer function', () => {
         avatar: 'https://avatar-user-tes-url.jpg',
       },
       upVotesBy: [],
-      downVotesBy: ['test-user-unvote'],
+      downVotesBy: [authedUserId],
       comments: [
         {
           id: 'comment-tes',
@@ -299,7 +305,7 @@ describe('threadDetailReducer function', () => {
     const unvoteAction = {
       type: 'UNVOTE_THREAD_DETAIL',
       payload: {
-        userId: 'test-user-unvote',
+        userId: authedUserId,
       },
     };
 
@@ -356,7 +362,8 @@ describe('threadDetailReducer function', () => {
     });
   });
 
-  it('should return state with added userId on upVotesBy array on intended commentId when given "UPVOTE_COMMENT" action', () => {
+  it('should return state with added authed user id on upVotesBy array on intended commentId when given "UPVOTE_COMMENT" action', () => {
+    const authedUserId = 'test-authed-user';
     const comment = {
       id: 'comment-tes',
       content: 'Ini adalah komentar tes',
@@ -390,7 +397,7 @@ describe('threadDetailReducer function', () => {
       type: 'UPVOTE_COMMENT',
       payload: {
         commentId: 'comment-tes',
-        userId: 'test-user-upvote-comment',
+        userId: authedUserId,
       },
     };
 
@@ -401,13 +408,14 @@ describe('threadDetailReducer function', () => {
       comments: [
         {
           ...comment,
-          upVotesBy: ['test-user-upvote-comment'],
+          upVotesBy: [authedUserId],
         },
       ],
     });
   });
 
-  it('should return same state when given "UPVOTE_COMMENT" action if upVotesBy array on intended commentId already has userId', () => {
+  it('should return same state when given "UPVOTE_COMMENT" action if upVotesBy array on intended commentId already has authed user id', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -431,25 +439,26 @@ describe('threadDetailReducer function', () => {
             name: 'Tes Dua',
             avatar: 'https://avatar-user-tes-2-url.jpg',
           },
-          upVotesBy: ['test-user-upvote-comment'],
+          upVotesBy: [authedUserId],
           downVotesBy: [],
         },
       ],
     };
-    const upvoteAction = {
+    const upvoteCommentAction = {
       type: 'UPVOTE_COMMENT',
       payload: {
         commentId: 'comment-tes',
-        userId: 'test-user-upvote-comment',
+        userId: authedUserId,
       },
     };
 
-    const nextState = threadDetailReducer(initialState, upvoteAction);
+    const nextState = threadDetailReducer(initialState, upvoteCommentAction);
 
     expect(nextState).toStrictEqual(initialState);
   });
 
-  it('should return state with added userId on downVotesBy array on intended commentId when given "DOWNVOTE_COMMENT" action', () => {
+  it('should return state with added authed user id on downVotesBy array on intended commentId when given "DOWNVOTE_COMMENT" action', () => {
+    const authedUserId = 'test-authed-user';
     const comment = {
       id: 'comment-tes',
       content: 'Ini adalah komentar tes',
@@ -483,7 +492,7 @@ describe('threadDetailReducer function', () => {
       type: 'DOWNVOTE_COMMENT',
       payload: {
         commentId: 'comment-tes',
-        userId: 'test-user-downvote-comment',
+        userId: authedUserId,
       },
     };
 
@@ -494,13 +503,14 @@ describe('threadDetailReducer function', () => {
       comments: [
         {
           ...comment,
-          downVotesBy: ['test-user-downvote-comment'],
+          downVotesBy: [authedUserId],
         },
       ],
     });
   });
 
-  it('should return same state when given "DOWNVOTE_COMMENT" action if downVotesBy array on intended commentId already has userId', () => {
+  it('should return same state when given "DOWNVOTE_COMMENT" action if downVotesBy array on intended commentId already has authed user id', () => {
+    const authedUserId = 'test-authed-user';
     const initialState = {
       id: 'thread-tes',
       title: 'Thread Tes',
@@ -525,24 +535,25 @@ describe('threadDetailReducer function', () => {
             avatar: 'https://avatar-user-tes-2-url.jpg',
           },
           upVotesBy: [],
-          downVotesBy: ['test-user-downvote-comment'],
+          downVotesBy: [authedUserId],
         },
       ],
     };
-    const downvoteAction = {
+    const downvoteCommentAction = {
       type: 'DOWNVOTE_COMMENT',
       payload: {
         commentId: 'comment-tes',
-        userId: 'test-user-downvote-comment',
+        userId: authedUserId,
       },
     };
 
-    const nextState = threadDetailReducer(initialState, downvoteAction);
+    const nextState = threadDetailReducer(initialState, downvoteCommentAction);
 
     expect(nextState).toStrictEqual(initialState);
   });
 
-  it('should return state with empty upVotesBy array on intended commentId when given "UNVOTE_COMMENT" action', () => {
+  it('should return state with authed user id not included in upVotesBy array on intended commentId when given "UNVOTE_COMMENT" action', () => {
+    const authedUserId = 'test-authed-user';
     const comment = {
       id: 'comment-tes',
       content: 'Ini adalah komentar tes',
@@ -552,7 +563,7 @@ describe('threadDetailReducer function', () => {
         name: 'Tes Dua',
         avatar: 'https://avatar-user-tes-2-url.jpg',
       },
-      upVotesBy: ['test-user-unvote-comment'],
+      upVotesBy: [authedUserId],
       downVotesBy: [],
     };
     const initialState = {
@@ -572,15 +583,15 @@ describe('threadDetailReducer function', () => {
         comment,
       ],
     };
-    const unvoteAction = {
+    const unvoteCommentAction = {
       type: 'UNVOTE_COMMENT',
       payload: {
         commentId: 'comment-tes',
-        userId: 'test-user-unvote-comment',
+        userId: authedUserId,
       },
     };
 
-    const nextState = threadDetailReducer(initialState, unvoteAction);
+    const nextState = threadDetailReducer(initialState, unvoteCommentAction);
 
     expect(nextState).toStrictEqual({
       ...initialState,
@@ -593,7 +604,8 @@ describe('threadDetailReducer function', () => {
     });
   });
 
-  it('should return state with empty downVotesBy array on intended commentId when given "UNVOTE_COMMENT" action', () => {
+  it('should return state with authed user id not included in downVotesBy array on intended commentId when given "UNVOTE_COMMENT" action', () => {
+    const authedUserId = 'test-authed-user';
     const comment = {
       id: 'comment-tes',
       content: 'Ini adalah komentar tes',
@@ -604,7 +616,7 @@ describe('threadDetailReducer function', () => {
         avatar: 'https://avatar-user-tes-2-url.jpg',
       },
       upVotesBy: [],
-      downVotesBy: ['test-user-unvote-comment'],
+      downVotesBy: [authedUserId],
     };
     const initialState = {
       id: 'thread-tes',
@@ -623,15 +635,15 @@ describe('threadDetailReducer function', () => {
         comment,
       ],
     };
-    const unvoteAction = {
+    const unvoteCommentAction = {
       type: 'UNVOTE_COMMENT',
       payload: {
         commentId: 'comment-tes',
-        userId: 'test-user-unvote-comment',
+        userId: authedUserId,
       },
     };
 
-    const nextState = threadDetailReducer(initialState, unvoteAction);
+    const nextState = threadDetailReducer(initialState, unvoteCommentAction);
 
     expect(nextState).toStrictEqual({
       ...initialState,

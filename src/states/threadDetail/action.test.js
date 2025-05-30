@@ -1,9 +1,7 @@
 import {
-  afterEach,
-  beforeEach, describe, expect, it, vi,
+  afterEach, describe, expect, it, vi,
 } from 'vitest';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import * as api from '../../utils/api';
 import {
   asyncUnvoteThreadDetail,
   downvoteThreadDetailActionCreator,
@@ -49,23 +47,27 @@ const fakeThreadDetailState = {
 
 const fakeErrorResponse = new Error('Error occured!');
 
-describe('asyncUnvoteThreadDetail thunk function', () => {
-  beforeEach(() => {
-    api.tmp_unvoteThread = api.unvoteThread;
-  });
+const dispatch = vi.fn();
+window.alert = vi.fn();
+const getState = vi.fn();
 
+vi.mock('../../utils/api', () => ({
+  unvoteThread: vi.fn(),
+}));
+
+import * as api from '../../utils/api';
+
+describe('asyncUnvoteThreadDetail thunk function', () => {
   afterEach(() => {
-    api.unvoteThread = api.tmp_unvoteThread;
-    delete api.tmp_unvoteThread;
+    vi.resetAllMocks();
   });
 
   it('should dispatch loading bar and unvote action when data fetching success', async () => {
-    const dispatch = vi.fn();
-    const getState = () => ({
+    getState.mockImplementation(() => ({
       authedUser: fakeAuthedUserState,
       threadDetail: fakeThreadDetailState,
-    });
-    api.unvoteThread = () => Promise.resolve(true);
+    }));
+    api.unvoteThread.mockImplementation(() => Promise.resolve(true));
 
     await asyncUnvoteThreadDetail()(dispatch, getState);
 
@@ -75,16 +77,14 @@ describe('asyncUnvoteThreadDetail thunk function', () => {
   });
 
   it('should dispatch loading bar and upvote action, and call alert correctly when data fetching failed and users upvote before', async () => {
-    const dispatch = vi.fn();
-    const getState = () => ({
+    getState.mockImplementation(() => ({
       authedUser: fakeAuthedUserState,
       threadDetail: {
         ...fakeThreadDetailState,
         upVotesBy: [fakeAuthedUserState.id],
       },
-    });
-    api.unvoteThread = () => Promise.reject(fakeErrorResponse);
-    window.alert = vi.fn();
+    }));
+    api.unvoteThread.mockImplementation(() => Promise.reject(fakeErrorResponse));
 
     await asyncUnvoteThreadDetail()(dispatch, getState);
 
@@ -96,16 +96,14 @@ describe('asyncUnvoteThreadDetail thunk function', () => {
   });
 
   it('should dispatch loading bar and downvote action, and call alert correctly when data fetching failed and users downvote before', async () => {
-    const dispatch = vi.fn();
-    const getState = () => ({
+    getState.mockImplementation(() => ({
       authedUser: fakeAuthedUserState,
       threadDetail: {
         ...fakeThreadDetailState,
         downVotesBy: [fakeAuthedUserState.id],
       },
-    });
-    api.unvoteThread = () => Promise.reject(fakeErrorResponse);
-    window.alert = vi.fn();
+    }));
+    api.unvoteThread.mockImplementation(() => Promise.reject(fakeErrorResponse));
 
     await asyncUnvoteThreadDetail()(dispatch, getState);
 

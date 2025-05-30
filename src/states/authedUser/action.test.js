@@ -1,12 +1,10 @@
-import {
-  afterEach,
-  beforeEach, describe, expect, it, vi,
-} from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import * as api from '../../utils/api';
 import { asyncSetAuthedUser, setAuthedUserActionCreator } from './action';
 
-const fakeAuthedUserState = {
+const fakeToken = 'fakeToken';
+
+const fakeOwnProfileResponse = {
   id: 'user_tes',
   name: 'user tes',
   email: 'user@tes.com',
@@ -15,27 +13,25 @@ const fakeAuthedUserState = {
 
 const fakeErrorResponse = new Error('Error occured!');
 
-describe('asyncSetAuthedUser thunk function', () => {
-  beforeEach(() => {
-    api.tmp_login = api.login;
-    api.tmp_setToken = api.setToken;
-    api.tmp_getOwnProfile = api.getOwnProfile;
-  });
+const dispatch = vi.fn();
+window.alert = vi.fn();
 
+vi.mock('../../utils/api', () => ({
+  login: vi.fn(),
+  setToken: () => null,
+  getOwnProfile: vi.fn(),
+}));
+
+import * as api from '../../utils/api';
+
+describe('asyncSetAuthedUser thunk function', () => {
   afterEach(() => {
-    api.login = api.tmp_login;
-    api.setToken = api.tmp_setToken;
-    api.getOwnProfile = api.tmp_getOwnProfile;
-    delete api.tmp_login;
-    delete api.tmp_setToken;
-    delete api.tmp_getOwnProfile;
+    vi.resetAllMocks();
   });
 
   it('should dispatch loading bar and authedUser action when data fetching success', async () => {
-    const dispatch = vi.fn();
-    api.login = () => Promise.resolve('');
-    api.setToken = () => null;
-    api.getOwnProfile = () => Promise.resolve(fakeAuthedUserState);
+    api.login.mockImplementation(() => Promise.resolve(fakeToken));
+    api.getOwnProfile.mockImplementation(() => Promise.resolve(fakeOwnProfileResponse));
 
     await asyncSetAuthedUser({
       email: 'user@test.com',
@@ -43,16 +39,13 @@ describe('asyncSetAuthedUser thunk function', () => {
     })(dispatch);
 
     expect(dispatch).toHaveBeenCalledWith(showLoading());
-    expect(dispatch).toHaveBeenCalledWith(setAuthedUserActionCreator(fakeAuthedUserState));
+    expect(dispatch).toHaveBeenCalledWith(setAuthedUserActionCreator(fakeOwnProfileResponse));
     expect(dispatch).toHaveBeenCalledWith(hideLoading());
   });
 
   it('should dispatch loading bar and call alert correctly when data fetching failed', async () => {
-    const dispatch = vi.fn();
-    api.login = () => Promise.reject(fakeErrorResponse);
-    api.setToken = () => null;
-    api.getOwnProfile = () => Promise.reject(fakeErrorResponse);
-    window.alert = vi.fn();
+    api.login.mockImplementation(() => Promise.reject(fakeErrorResponse));
+    api.getOwnProfile.mockImplementation(() => Promise.reject(fakeErrorResponse));
 
     await asyncSetAuthedUser({
       email: 'user@test.com',

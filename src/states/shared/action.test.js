@@ -1,14 +1,10 @@
-import {
-  afterEach,
-  beforeEach, describe, expect, it, vi,
-} from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
-import * as api from '../../utils/api';
 import asyncReceiveUsersAndThreads from './action';
 import { receiveUsersActionCreator } from '../users/action';
 import { receiveThreadsActionCreator } from '../threads/action';
 
-const fakeUsersState = [
+const fakeUsersResponse = [
   {
     id: 'user_one',
     name: 'User One',
@@ -23,7 +19,7 @@ const fakeUsersState = [
   },
 ];
 
-const fakeThreadsState = [
+const fakeThreadsResponse = [
   {
     id: 'thread-1',
     title: 'Thread One',
@@ -50,37 +46,36 @@ const fakeThreadsState = [
 
 const fakeErrorResponse = new Error('Error occured!');
 
-describe('asyncReceiveUsersAndThreads thunk function', () => {
-  beforeEach(() => {
-    api.tmp_getUsers = api.getUsers;
-    api.tmp_getThreads = api.getThreads;
-  });
+const dispatch = vi.fn();
+window.alert = vi.fn();
 
+vi.mock('../../utils/api', () => ({
+  getUsers: vi.fn(),
+  getThreads: vi.fn(),
+}));
+
+import * as api from '../../utils/api';
+
+describe('asyncReceiveUsersAndThreads thunk function', () => {
   afterEach(() => {
-    api.getUsers = api.tmp_getUsers;
-    api.getThreads = api.tmp_getThreads;
-    delete api.tmp_getUsers;
-    delete api.tmp_getThreads;
+    vi.resetAllMocks();
   });
 
   it('should dispatch loading bar, users, and threads action when data fetching success', async () => {
-    const dispatch = vi.fn();
-    api.getUsers = () => Promise.resolve(fakeUsersState);
-    api.getThreads = () => Promise.resolve(fakeThreadsState);
+    api.getUsers.mockImplementation(() => Promise.resolve(fakeUsersResponse));
+    api.getThreads.mockImplementation(() => Promise.resolve(fakeThreadsResponse));
 
     await asyncReceiveUsersAndThreads()(dispatch);
 
     expect(dispatch).toHaveBeenCalledWith(showLoading());
-    expect(dispatch).toHaveBeenCalledWith(receiveUsersActionCreator(fakeUsersState));
-    expect(dispatch).toHaveBeenCalledWith(receiveThreadsActionCreator(fakeThreadsState));
+    expect(dispatch).toHaveBeenCalledWith(receiveUsersActionCreator(fakeUsersResponse));
+    expect(dispatch).toHaveBeenCalledWith(receiveThreadsActionCreator(fakeThreadsResponse));
     expect(dispatch).toHaveBeenCalledWith(hideLoading());
   });
 
   it('should dispatch loading bar and call alert correctly when data fetching failed', async () => {
-    const dispatch = vi.fn();
-    api.getUsers = () => Promise.reject(fakeErrorResponse);
-    api.getThreads = () => Promise.reject(fakeErrorResponse);
-    window.alert = vi.fn();
+    api.getUsers.mockImplementation(() => Promise.reject(fakeErrorResponse));
+    api.getThreads.mockImplementation(() => Promise.reject(fakeErrorResponse));
 
     await asyncReceiveUsersAndThreads()(dispatch);
 
