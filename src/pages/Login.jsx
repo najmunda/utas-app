@@ -28,7 +28,7 @@ function Login() {
       <div className="size-16 bg-lime-400 rounded-lg" />
       <h1 className="text-5xl font-bold">Ribuan Utas, Satu Tempat.</h1>
       <br />
-      <p>Masuk dan mulai berdiskusi.</p>
+      <p>Login dan mulai berdiskusi.</p>
       <br />
       <form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
         <InputText
@@ -51,7 +51,7 @@ function Login() {
         <TextButton
           type="submit"
         >
-          Masuk
+          Login
         </TextButton>
       </form>
       <br />
