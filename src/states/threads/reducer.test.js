@@ -1,3 +1,25 @@
+/**
+ * test scenarios for threads reducer
+ *
+ * - threadsReducer function
+ *   - should return initial state when given unknown action
+ *   - should return state with threads data when given "RECEIVE_THREADS" action
+ *   - should return state with appended created thread data when given "CREATE_THREAD" action
+ *   - should return state with added userId on upVotesBy array on intended threadId
+ *     when given "UPVOTE_THREAD" action
+ *   - should return same state when given "UPVOTE_THREAD" action
+ *     if upVotesBy array on intended threadId already has userId
+ *   - should return state with added userId on downVotesBy array on intended threadId
+ *     when given "DOWNVOTE_THREAD" action
+ *   - should return same state when given "DOWNVOTE_THREAD" action
+ *     if downVotesBy array on intended threadId already has userId
+ *   - should return state with authed user id not included in upVotesBy array on intended threadId
+ *     when given "UNVOTE_THREAD" action
+ *   - should return state with authed user id not included in downVotesBy array
+ *     on intended threadId when given "UNVOTE_THREAD" action
+ *
+ */
+
 import { describe, expect, it } from 'vitest';
 import threadsReducer from './reducer';
 

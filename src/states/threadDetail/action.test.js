@@ -1,3 +1,15 @@
+/**
+ * test scenarios for threadDetail action
+ *
+ * - asyncUnvoteThreadDetail thunk function
+ *   - should dispatch loading bar and unvote action when data fetching success
+ *   - should dispatch loading bar and upvote action, and call alert correctly
+ *     when data fetching failed and users upvote before
+ *   - should dispatch loading bar and downvote action, and call alert correctly
+ *     when data fetching failed and users downvote before
+ *
+ */
+
 import {
   afterEach, describe, expect, it, vi,
 } from 'vitest';

@@ -1,3 +1,15 @@
+/**
+ * test scenarios for NewThreadForm
+ *
+ * - NewThreadForm component
+ *   - should has title input that required and handle input correctly
+ *   - should has category input that handle type input correctly
+ *   - should has option of given category
+ *   - should has body input that required and handle input correctly
+ *   - should has button with submit type and dispatch correct action
+ *
+ */
+
 import React from 'react';
 import {
   afterEach, describe, expect, it, vi,

@@ -1,3 +1,15 @@
+/**
+ * test scenarios for login
+ *
+ * - Login spec
+ *   - should display login page correctly
+ *   - should display alert when login button pressed and email is empty
+ *   - should display alert when login button pressed and password is empty
+ *   - should display alert when login button pressed and email/password is wrong
+ *   - should redirect and show homepage when login success
+ *
+ */
+
 describe('Login spec', () => {
   it('should display login page correctly', () => {
     cy.visit('http://localhost:5173');

@@ -1,3 +1,15 @@
+/**
+ * test scenarios for ThreadList
+ *
+ * - ThreadList component
+ *   - should show parent and column div with correct className to form masonry
+ *   - should have 2 column children and grid-cols-2 class when columnCount equal 2
+ *   - should have 1 column children and grid-cols-1 class when columnCount equal 1
+ *   - should have 1 column children and grid-cols-1 class when columnCount not equal 1, 2, or 3
+ *   - should have thread item children equal threads length
+ *
+ */
+
 import React from 'react';
 import {
   afterEach, describe, expect, it, vi,

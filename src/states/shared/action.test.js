@@ -1,3 +1,12 @@
+/**
+ * test scenarios for shared action
+ *
+ * - asyncReceiveUsersAndThreads thunk function
+ *   - should dispatch loading bar, users, and threads action when data fetching success
+ *   - should dispatch loading bar and call alert correctly when data fetching failed
+ *
+ */
+
 import {
   afterEach, describe, expect, it, vi,
 } from 'vitest';

@@ -1,3 +1,13 @@
+/**
+ * test scenarios for DownvoteButton
+ *
+ * - DownvoteButton component
+ *  - 'should be visible and show correct count'
+ *  - 'should call passed handleLogin function'
+ *  - 'icon should have different className when isVoted equal true'
+ *
+ */
+
 import React from 'react';
 import {
   afterEach, describe, expect, it, vi,

@@ -1,3 +1,13 @@
+/**
+ * test scenarios for authedUser reducer
+ *
+ * - authedUserReducer function
+ *   - should return initial state when given unknown action
+ *   - should return state with authed user data when given "SET_AUTHED_USER" action
+ *   - should return state with null when given "UNSET_AUTHED_USER" action
+ *
+ */
+
 import { describe, expect, it } from 'vitest';
 import authedUserReducer from './reducer';
 

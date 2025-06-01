@@ -1,3 +1,38 @@
+/**
+ * test scenarios for threadDetail reducer
+ *
+ * - threadDetailReducer function
+ *   - should return initial state when given unknown action
+ *   - should return state with thread detail data when given "RECEIVE_THREAD_DETAIL" action
+ *   - should return state with authed user id on upVotesBy array
+ *     when given "UPVOTE_THREAD_DETAIL" action
+ *   - should return same state when given "UPVOTE_THREAD_DETAIL" action
+ *     if upVotesBy array already has authed user id
+ *   - should return state with authed user id on downVotesBy array
+ *     when given "DOWNVOTE_THREAD_DETAIL" action
+ *   - should return same state when given "DOWNVOTE_THREAD_DETAIL" action
+ *     if downVotesBy array already has authed user id
+ *   - should return state with authed user id not included in upVotesBy array
+ *     when given "UNVOTE_THREAD_DETAIL" action
+ *   - should return state with authed user id not included in downVotesBy array
+ *     when given "UNVOTE_THREAD_DETAIL" action
+ *   - should return state with created comment on comments array
+ *     when given "CREATE_COMMENT" action
+ *   - should return state with added authed user id on upVotesBy array on intended commentId
+ *     when given "UPVOTE_COMMENT" action
+ *   - should return same state when given "UPVOTE_COMMENT" action
+ *     if upVotesBy array on intended commentId already has authed user id
+ *   - should return state with added authed user id on downVotesBy array on intended commentId
+ *     when given "DOWNVOTE_COMMENT" action
+ *   - should return same state when given "DOWNVOTE_COMMENT" action
+ *     if downVotesBy array on intended commentId already has authed user id
+ *   - should return state with authed user id not included in upVotesBy array on intended commentId
+ *     when given "UNVOTE_COMMENT" action
+ *   - should return state with authed user id not included in downVotesBy array
+ *     on intended commentId when given "UNVOTE_COMMENT" action
+ *
+ */
+
 import { describe, expect, it } from 'vitest';
 import threadDetailReducer from './reducer';
 

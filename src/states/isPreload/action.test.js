@@ -1,3 +1,14 @@
+/**
+ * test scenarios for isPreload action
+ *
+ * - asyncPreload thunk function
+ *   - should dispatch loading bar and authedUser action with authed user data
+ *     when data fetching success
+ *   - should dispatch loading bar and authedUser action with null, and call alert correctly
+ *     when data fetching failed
+ *
+ */
+
 import {
   afterEach, describe, expect, it, vi,
 } from 'vitest';
